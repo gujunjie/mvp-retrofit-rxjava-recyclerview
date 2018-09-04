@@ -7,23 +7,10 @@
     android:orientation="vertical"
     tools:context="view.MainActivity">
 
-    <Button
-        android:text="显示图片"
-        android:id="@+id/btn_showImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <ImageView
-    android:layout_weight="1"
-    android:id="@+id/iv_image1"
-    android:layout_width="wrap_content"
-    android:layout_height="0dp" />
-
-    <ImageView
-        android:layout_weight="1"
-        android:id="@+id/iv_image2"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 
 

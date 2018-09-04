@@ -7,12 +7,17 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.abc.myapplication29.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import Base.BaseActivity;
@@ -26,35 +31,19 @@ import presenter.Presenter;
 
 public class MainActivity extends BaseActivity<IView,Presenter> implements IView {
 
-    @BindView(R.id.iv_image1)
-    ImageView ivImage1;
-    @BindView(R.id.iv_image2)
-    ImageView ivImage2;
+
 
     Presenter presenter;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-    }
-
-    @Override
-    public Presenter createPresenter() {
-        presenter = new Presenter(this);
-        return presenter;
-    }
 
 
-    @Override
-    public void showImage(List<BaiduImage.ImgsBean> list) {
-        Glide.with(this).load(list.get(0).getImageUrl()).into(ivImage1);
-        Glide.with(this).load(list.get(5).getImageUrl()).into(ivImage2);
-    }
-
-    @OnClick(R.id.btn_showImage)
-    public void onViewClicked() {
 
         if (ContextCompat.checkSelfPermission(MainActivity.this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -70,7 +59,35 @@ public class MainActivity extends BaseActivity<IView,Presenter> implements IView
         }
 
 
+
+
     }
+
+    @Override
+    public Presenter createPresenter() {
+        presenter = new Presenter(this);
+        return presenter;
+    }
+
+
+    @Override
+    public void showImage(List<BaiduImage.ImgsBean> list) {
+
+
+
+        RecyclerView recyclerView=(RecyclerView)findViewById(R.id.rv_recyclerView);
+        StaggeredGridLayoutManager manager=new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(manager);
+
+        manager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
+
+        PhotoAdapter adapter=new PhotoAdapter(list,MainActivity.this);
+
+
+        recyclerView.setAdapter(adapter);
+    }
+
+
 
     public void getImageList()
     {
